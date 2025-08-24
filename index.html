@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Camilio Layouts • Portfolio & Pricing</title>
+
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { display: ['Poppins', 'ui-sans-serif', 'system-ui'], body: ['Inter', 'ui-sans-serif', 'system-ui'] },
+            colors: {
+              bg: {
+                900: '#0a0a12',
+                800: '#0f0f19'
+              },
+              accent: {
+                100: '#fce7f3',
+                200: '#fbcfe8',
+                400: '#f472b6',
+                500: '#ec4899',
+                600: '#db2777',
+                700: '#be185d'
+              },
+            },
+            boxShadow: {
+              glow: '0 0 25px rgba(236, 72, 153, 0.35)',
+            },
+            keyframes: {
+              shimmer: {
+                '0%': { backgroundPosition: '0% 50%' },
+                '100%': { backgroundPosition: '200% 50%' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-6px)' },
+              },
+              twinkle: {
+                '0%, 100%': { opacity: 0.15 },
+                '50%': { opacity: 0.5 },
+              },
+            },
+            animation: {
+              shimmer: 'shimmer 6s linear infinite',
+              float: 'float 5s ease-in-out infinite',
+              twinkle: 'twinkle 3.5s ease-in-out infinite',
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+
+    <style>
+      /* Glitter layer: animated multi-gradient that softly shimmers */
+      .glitter-overlay::before {
+        content: '';
+        position: absolute; inset: 0;
+        pointer-events: none; mix-blend-mode: screen; opacity: .35;
+        background-image:
+          radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.7), transparent 60%),
+          radial-gradient(2px 2px at 90% 10%, rgba(255,255,255,.5), transparent 60%),
+          radial-gradient(3px 3px at 30% 80%, rgba(255,192,247,.5), transparent 60%),
+          radial-gradient(2px 2px at 70% 50%, rgba(255,255,255,.65), transparent 60%),
+          radial-gradient(2px 2px at 40% 30%, rgba(252, 231, 243, .6), transparent 60%);
+        background-size: 400px 400px, 500px 500px, 600px 600px, 450px 450px, 550px 550px;
+        animation: glitterShift 18s linear infinite;
+      }
+      @keyframes glitterShift {
+        0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+        100% { background-position: 400px 400px, -500px 500px, 600px -600px, -450px -450px, 550px -550px; }
+      }
+
+      /* Sparkle particles created by JS */
+      .sparkle {
+        position: fixed; width: 10px; height: 10px; pointer-events: none; z-index: 50;
+        background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 40%, rgba(255,255,255,0) 70%);
+        filter: drop-shadow(0 0 6px rgba(255, 200, 255, 0.9));
+        animation: sparkle-pop .8s ease-out forwards;
+        border-radius: 9999px;
+      }
+      @keyframes sparkle-pop {
+        0%   { transform: translate(-50%, -50%) scale(.2) rotate(0deg); opacity: 1; }
+        70%  { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); opacity: .9; }
+        100% { transform: translate(-50%, -50%) scale(0) rotate(360deg); opacity: 0; }
+      }
+
+      /* Noise film for subtle texture */
+      .film-grain::after{ content:''; position:absolute; inset:0; pointer-events:none; opacity:.04;
+        background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.8"/></svg>'); mix-blend-mode: overlay;
+      }
+
+      /* Hide scrollbars on galleries (non-essential) */
+      .no-scrollbar::-webkit-scrollbar{ display:none; }
+      .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    </style>
+  </head>
+
+  <body class="bg-bg-900 text-white selection:bg-accent-600/30 selection:text-white">
+    <!-- Global background -->
+    <div class="fixed inset-0 -z-10 bg-gradient-to-br from-bg-900 via-bg-800 to-black"></div>
+    <div class="fixed inset-0 -z-10 opacity-40 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(236,72,153,.15),transparent_70%)]"></div>
+
+    <!-- Sparkly overlay -->
+    <div class="glitter-overlay fixed inset-0 -z-10"></div>
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-bg-900/70 border-b border-white/10">
+      <div class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+        <a href="#home" class="font-display text-xl md:text-2xl tracking-tight">✨ Discord Layouts</a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="#work" class="opacity-80 hover:opacity-100">Portfolio</a>
+          <a href="#pricing" class="opacity-80 hover:opacity-100">Pricing</a>
+          <a href="#faq" class="opacity-80 hover:opacity-100">FAQ</a>
+          <a href="#contact" class="opacity-80 hover:opacity-100">Contact</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <button id="themeToggle" class="rounded-full p-2 ring-1 ring-white/10 hover:ring-white/30" aria-label="Toggle theme">
+            <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M21.64 13A9 9 0 1111 2.36 7 7 0 0021.64 13z"/></svg>
+          </button>
+          <a href="#contact" class="hidden sm:inline-block bg-accent-600 hover:bg-accent-500 transition-colors px-4 py-2 rounded-full font-medium shadow-glow">Book Now</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="relative overflow-hidden film-grain">
+      <div class="mx-auto max-w-7xl px-4 pt-16 pb-24">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="font-display text-4xl md:text-6xl leading-tight">Custom <span class="bg-gradient-to-r from-accent-400 via-accent-600 to-fuchsia-500 bg-clip-text text-transparent animate-shimmer [background-size:200%_auto]">Discord Layouts</span><br/> that sparkle ✨</h1>
+            <p class="mt-4 text-white/80 max-w-prose">I design clean, animated server layouts, banners, and profile assets that stand out but stay readable. Packages for Discord Servers.</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#work" class="rounded-full px-5 py-2 bg-white/10 hover:bg-white/20 ring-1 ring-white/10">See Portfolio</a>
+              <a href="#pricing" class="rounded-full px-5 py-2 bg-accent-600 hover:bg-accent-500 shadow-glow">View Prices</a>
+            </div>
+            <div class="mt-6 flex items-center gap-3 text-xs text-white/60">
+              <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">⚡ Fast delivery</span>
+              <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">🛠️ Revisions included</span>
+              <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">💎 Checklists </span>
+            </div>
+          </div>
+          <div class="relative">
+            <!-- Hero mockup card -->
+            <div class="relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-4 md:p-6 shadow-xl animate-float">
+              <div class="rounded-xl bg-gradient-to-br from-bg-800 to-bg-900 p-4 ring-1 ring-white/10">
+                <div class="flex items-center gap-2 mb-3 text-xs text-white/60">
+                  <span class="h-3 w-3 rounded-full bg-emerald-400/80"></span>
+                  <span class="h-3 w-3 rounded-full bg-amber-400/80"></span>
+                  <span class="h-3 w-3 rounded-full bg-rose-400/80"></span>
+                  <span class="ml-auto">server-layout.png</span>
+                </div>
+                <div class="grid grid-cols-12 gap-3 text-sm">
+                  <div class="col-span-3 space-y-2">
+                    <div class="h-10 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                    <div class="h-10 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                    <div class="h-10 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                    <div class="h-10 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                  </div>
+                  <div class="col-span-9 space-y-3">
+                    <div class="h-28 rounded-lg bg-gradient-to-r from-white/10 via-white/5 to-white/10 ring-1 ring-white/10"></div>
+                    <div class="h-12 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                    <div class="h-12 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                    <div class="h-12 rounded-md bg-white/5 ring-1 ring-white/10"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-fuchsia-500/20 via-accent-600/10 to-purple-500/20 blur-2xl -z-10"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="work" class="relative py-20">
+      <div class="mx-auto max-w-7xl px-4">
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <h2 class="font-display text-3xl md:text-4xl">Portfolio</h2>
+          <div class="flex items-center gap-2 text-sm">
+            <label class="opacity-70">Style:</label>
+            <select id="styleFilter" class="bg-white/10 ring-1 ring-white/10 rounded-md px-3 py-2">
+              <option value="all">All</option>
+              <option value="Before">Before</option>
+              <option value="After">After</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="gallery" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Portfolio items. Replace src/data-img attributes with your real image files -->
+          <article class="project group relative overflow-hidden rounded-xl border border-white/10 bg-white/5" data-style="Before">
+            <a href="#lightbox" data-img="Screenshot 2025-08-20 3.11.26 PM.png">
+              <img alt="Before" src="Screenshot 2025-08-20 3.11.26 PM.png" class="h-48 w-full object-cover opacity-90 group-hover:opacity-100 transition"/>
+            </a>
+            <div class="p-4">
+              <h3 class="font-semibold">Before</h3>
+              <p class="text-sm text-white/70">Bulky & Different Fonts</p>
+            </div>
+          </article>
+
+          <article class="project group relative overflow-hidden rounded-xl border border-white/10 bg-white/5" data-style="After">
+            <a href="#lightbox" data-img="Screenshot 2025-08-24 2.11.40 PM.png">
+              <img alt="After" src="Screenshot 2025-08-24 2.11.40 PM.png" class="h-48 w-full object-cover opacity-90 group-hover:opacity-100 transition"/>
+            </a>
+            <div class="p-4">
+              <h3 class="font-semibold">After</h3>
+              <p class="text-sm text-white/70">Laid out properly / aesthetics</p>
+            </div>
+          </article>
+        </div> <!-- end of gallery -->
+      </div> <!-- end of container for work section -->
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="relative py-20">
+      <div class="mx-auto max-w-7xl px-4">
+        <h2 class="font-display text-3xl md:text-4xl mb-8">Pricing</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Basic -->
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col">
+            <h3 class="text-xl font-semibold">Starter</h3>
+            <p class="text-white/70 text-sm">For personal profiles or small servers.</p>
+            <div class="mt-4 text-3xl font-extrabold">$35</div>
+            <ul class="mt-4 space-y-2 text-sm text-white/80">
+              <li>• Server banner (static)</li>
+              <li>• Channel layout (up to 10)</li>
+              <li>• 1 revision</li>
+              <li>• Delivery: 2–3 days</li>
+            </ul>
+            <a href="#contact" class="mt-6 rounded-xl bg-white/10 hover:bg-white/20 ring-1 ring-white/10 px-4 py-2 text-center">Choose Starter</a>
+          </div>
+          <!-- Popular -->
+          <div class="relative rounded-2xl border-2 border-accent-600 bg-white/5 p-6 shadow-glow flex flex-col">
+            <span class="absolute -top-3 left-6 rounded-full bg-accent-600 px-3 py-1 text-xs font-semibold">Most Popular</span>
+            <h3 class="text-xl font-semibold">Creator</h3>
+            <p class="text-white/70 text-sm">Great for streamers & community servers.</p>
+            <div class="mt-4 text-3xl font-extrabold">$75</div>
+            <ul class="mt-4 space-y-2 text-sm text-white/80">
+              <li>• Animated server banner</li>
+              <li>• Channel layout (up to 25)</li>
+              <li>• 6 role icons & 6 dividers</li>
+              <li>• 2 revisions</li>
+              <li>• Delivery: 3–5 days</li>
+            </ul>
+            <a href="#contact" class="mt-6 rounded-xl bg-accent-600 hover:bg-accent-500 px-4 py-2 text-center font-semibold shadow-glow">Choose Creator</a>
+          </div>
+          <!-- Premium -->
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col">
+            <h3 class="text-xl font-semibold">Pro Server</h3>
+            <p class="text-white/70 text-sm">For brands & large community servers.</p>
+            <div class="mt-4 text-3xl font-extrabold">$150</div>
+            <ul class="mt-4 space-y-2 text-sm text-white/80">
+              <li>• Full server layout (unlimited)</li>
+              <li>• Animated banner + profile pack</li>
+              <li>• Custom emotes (10) & icons (12)</li>
+              <li>• 3 revisions + priority support</li>
+              <li>• Delivery: 5–7 days</li>
+            </ul>
+            <a href="#contact" class="mt-6 rounded-xl bg-white/10 hover:bg-white/20 ring-1 ring-white/10 px-4 py-2 text-center">Choose Pro</a>
+          </div>
+        </div>
+
+        <p class="mt-4 text-xs text-white/60">Prices are base rates; final quote depends on scope. Rush delivery available.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative py-20">
+      <div class="mx-auto max-w-7xl px-4">
+        <h2 class="font-display text-3xl md:text-4xl mb-8">FAQ</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <details class="rounded-xl border border-white/10 bg-white/5 p-5 open:bg-white/[.07]">
+            <summary class="cursor-pointer font-medium">What files do I receive?</summary>
+            <p class="mt-2 text-white/80 text-sm">Optimized PNG/WEBP assets, banner MP4/GIF (for animated), and a channel layout checklist.</p>
+          </details>
+          <details class="rounded-xl border border-white/10 bg-white/5 p-5 open:bg-white/[.07]">
+            <summary class="cursor-pointer font-medium">How do revisions work?</summary>
+            <p class="mt-2 text-white/80 text-sm">Each package includes the revisions listed above. Extra revisions are available for a small fee.</p>
+          </details>
+          <details class="rounded-xl border border-white/10 bg-white/5 p-5 open:bg-white/[.07]">
+            <summary class="cursor-pointer font-medium">Can you match my brand style?</summary>
+            <p class="mt-2 text-white/80 text-sm">Yes! Send references (colors, fonts, examples). I’ll build a consistent theme for your server.</p>
+          </details>
+          <details class="rounded-xl border border-white/10 bg-white/5 p-5 open:bg-white/[.07]">
+            <summary class="cursor-pointer font-medium">What’s the payment method?</summary>
+            <p class="mt-2 text-white/80 text-sm">PayPal or Stripe. 50% upfront deposit for Pro projects.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="relative py-20">
+      <div class="mx-auto max-w-4xl px-4 text-center">
+        <h2 class="font-display text-3xl md:text-4xl">Ready to make it sparkle?</h2>
+        <p class="mt-3 text-white/80">DM on Discord <span class="font-semibold">@Camelsss</span> or send a brief with your server goals.</p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="https://discord.com/users/500698670283620364" class="rounded-full bg-accent-600 hover:bg-accent-500 px-6 py-3 font-semibold shadow-glow">Message on Discord</a>
+          <a href="mailto:carmellamouradi1@gmail.com" class="rounded-full bg-white/10 hover:bg-white/20 ring-1 ring-white/10 px-6 py-3">Email Brief</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="border-t border-white/10 py-8 text-center text-sm text-white/60">
+      © <span id="year"></span> Camilio • Discord Layouts
+    </footer>
+
+    <!-- Lightbox element -->
+    <div id="lightbox" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 p-4">
+      <div class="relative max-w-full max-h-screen mx-auto">
+        <button id="lightbox-close" class="absolute -top-4 -right-4 text-white text-3xl leading-none p-2">&times;</button>
+        <img id="lightbox-img" class="block max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-lg" src="" alt="Preview" />
+      </div>
+    </div>
+
+    <!-- Interactive scripts -->
+    <script>
+      // Theme toggle (persist in localStorage)
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+      const THEME_KEY = 'theme-preference';
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+      }
+      function updateIcon(){
+        document.getElementById('themeIcon').innerHTML = html.classList.contains('dark')
+          ? '<path d="M21.64 13A9 9 0 1111 2.36 7 7 0 0021.64 13z"/>'
+          : '<path d="M12 3a1 1 0 011 1v2a1 1 0 11-2 0V4a1 1 0 011-1zm0 14a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm9-5a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM6 12a1 1 0 01-1 1H3a1 1 0 110-2h2a1 1 0 011 1zm12.364 7.364a1 1 0 01-1.414 0l-1.414-1.414a1 1 0 111.414-1.414l1.414 1.414a1 1 0 010 1.414zM7.05 7.05a1 1 0 01-1.414 0L4.222 5.636A1 1 0 015.636 4.222L7.05 5.636A1 1 0 017.05 7.05zm10.314-2.828a1 1 0 010 1.414L15.95 7.05a1 1 0 11-1.414-1.414l1.414-1.414a1 1 0 011.414 0zM7.05 16.95a1 1 0 010 1.414L5.636 19.778A1 1 0 114.222 18.364l1.414-1.414a1 1 0 011.414 0z"/>'
+      }
+      updateIcon();
+      themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        localStorage.setItem(THEME_KEY, html.classList.contains('dark') ? 'dark' : 'light');
+        updateIcon();
+      });
+
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Portfolio style filter
+      const filter = document.getElementById('styleFilter');
+      const projects = Array.from(document.querySelectorAll('.project'));
+      filter.addEventListener('change', () => {
+        const val = filter.value;
+        projects.forEach(card => {
+          card.classList.toggle('hidden', val !== 'all' && card.dataset.style !== val);
+        });
+      });
+
+      // Sparkle trail effect
+      let lastSparkle = 0;
+      window.addEventListener('pointermove', (e) => {
+        const now = performance.now();
+        if (now - lastSparkle < 16) return; // limit spawn rate
+        lastSparkle = now;
+        for (let i = 0; i < 2; i++) spawnSparkle(e.clientX, e.clientY);
+      });
+
+      function spawnSparkle(x, y) {
+        const s = document.createElement('span');
+        s.className = 'sparkle';
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 14;
+        s.style.left = x + Math.cos(angle) * radius + 'px';
+        s.style.top = y + Math.sin(angle) * radius + 'px';
+        s.style.transform = 'translate(-50%, -50%) scale(' + (0.5 + Math.random()) + ')';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 900);
+      }
+
+      // Reduce motion preference
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[class*=animate-]').forEach(el => el.classList.remove(...Array.from(el.classList).filter(c => c.startsWith('animate-'))));
+        document.querySelectorAll('.sparkle').forEach(s => s.remove());
+      }
+
+      // Lightbox functionality: attach to project cards instead of <a>
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      document.querySelectorAll('.project').forEach(card => {
+        const link = card.querySelector('a');
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Determine image source: priority to data-img attribute, fallback to thumbnail src
+          const customImg = link ? link.getAttribute('data-img') : null;
+          const fallbackImg = link?.querySelector('img')?.src;
+          const src = customImg || fallbackImg;
+          if (!src) return;
+          lightboxImg.src = src;
+          lightbox.classList.remove('hidden');
+        });
+      });
+
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+      });
+
+      // Close lightbox when clicking on overlay
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+        }
+      });
+    </script>
+  </body>
+</html>
